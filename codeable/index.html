@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMD-Style Website with AI Chatbot</title>
+<style>
+  body {
+    background-color: #000;
+    color: #0F0;
+    font-family: "Courier New", monospace;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .cmd-window {
+    border: 2px solid #0F0;
+    background-color: #000;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.5);
+    width: 80%;
+    max-width: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+  .cmd-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .cmd-prompt {
+    color: #0F0;
+    margin-right: 5px;
+  }
+  .cmd-input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    color: #0F0;
+    outline: none;
+  }
+  /* Chatbot styles */
+  .chat-container {
+    margin-top: 10px;
+  }
+  .user-message, .bot-message {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .user-message .cmd-prompt, .bot-message .cmd-prompt {
+    color: #0F0;
+    margin-right: 5px;
+  }
+  .user-message .cmd-input, .bot-message .cmd-input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    color: #0F0;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+  <div class="cmd-window">
+    <div>Athena Ver 0.1 Prototype</div>
+    <div class="chat-container">
+        <!-- Bot's initial message -->
+        <div class="bot-message">
+            <span class="cmd-prompt"></span>
+        </div>
+    </div>
+    <div class="cmd-line">
+        <div class="cmd-prompt">C:\></div>
+        <input class="cmd-input" type="text" id="user-input" placeholder="Type your command here" onkeydown="handleUserInput(event)">
+    </div>
+  </div>
+
+  <script>
+    function handleUserInput(event) {
+        if (event.key === "Enter") {
+            const userInput = document.getElementById("user-input");
+            const userMessage = userInput.value;
+            const chatContainer = document.querySelector(".chat-container");
+
+            // Create a user message element
+            const userMessageElement = document.createElement("div");
+            userMessageElement.className = "user-message";
+            userMessageElement.innerHTML = `<span class="cmd-prompt">C:\anonymous></span> ${userMessage}`;
+            chatContainer.appendChild(userMessageElement);
+
+            // Simulate AI response (replace with actual AI logic)
+            const botResponse = getBotResponse(userMessage);
+
+            // Create a bot message element
+            const botMessageElement = document.createElement("div");
+            botMessageElement.className = "bot-message";
+            botMessageElement.innerHTML = `<span class="cmd-prompt">C:\></span> ${botResponse}`;
+            chatContainer.appendChild(botMessageElement);
+
+            // Clear the user input
+            userInput.value = "";
+        }
+    }
+
+    function getBotResponse(userMessage) {
+        // Replace this with your AI logic to generate responses
+        // For demonstration purposes, use predefined responses
+        const responses = {
+            "hello": "Hello! How can I assist you?",
+            "how are you": "I'm just a bot, but thanks for asking!",
+            "bye": "Goodbye! Feel free to return if you have more questions."
+        };
+
+        // Check if the user's input matches any predefined question
+        for (const question in responses) {
+            if (userMessage.toLowerCase().includes(question)) {
+                return responses[question];
+            }
+        }
+
+        // If no match found, provide a generic response
+        return "I'm not sure how to answer that question.";
+    }
+  </script>
+</body>
+</html>
